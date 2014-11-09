@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Website 1</title>
+
+	<script type="text/javascript" src="../src/IFrameOrchestratorClient.js"></script>
+</head>
+<body>
+	<h1>Website 1</h1>
+
+	<script type="text/javascript">
+		iframeOrchCli.set('iframe1.someValue', 'AlexCode');
+
+		iframeOrchCli.get('iframe1.someValue', function(value){ alert(value); });
+	</script>
+</body>
+</html>
