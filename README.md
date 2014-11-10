@@ -73,8 +73,14 @@ Setting the `allowedOrigins` property with an array of domain with enforce a sec
 Set a property value in the global scope.
 This property value can be accessed by the main page or even by other IFrames.
 To avoid naming collisions, consider a prefix for these property names.
+```js
+iframeOrchCli.set('iframe1_someValue', 'AlexCode');
+```
 	
 ### iframeOrchCli.get(key,callback)
 
 Get a property value from the global scope.
 The result will be given in the given callback.
+```js
+iframeOrchCli.get('iframe1_someValue', function(value){ console.log(value); });
+```
