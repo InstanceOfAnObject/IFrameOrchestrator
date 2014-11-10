@@ -66,3 +66,15 @@ Setting the `logging` option to true will show a lot of information on the conso
 	type: array
 	
 Setting the `allowedOrigins` property with an array of domain with enforce a security check, allowing only trusted domains the pass. This expects the protocol, i.e.: ['http://www.mydomain.com', 'https://demo.myotherdomain.com']
+
+## Client Methods (from inside the IFrame)
+### iframeOrchCli.set(key,value)
+
+Set a property value in the global scope.
+This property value can be accessed by the main page or even by other IFrames.
+To avoid naming collisions, consider a prefix for these property names.
+	
+### iframeOrchCli.get(key,callback)
+
+Get a property value from the global scope.
+The result will be given in the given callback.
