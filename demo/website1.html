@@ -9,9 +9,9 @@
 	<h1>Website 1</h1>
 
 	<script type="text/javascript">
-		iframeOrchCli.set('iframe1.someValue', 'AlexCode');
+		iframeOrchCli.set('iframe1_someValue', 'AlexCode');
 
-		iframeOrchCli.get('iframe1.someValue', function(value){ alert(value); });
+		iframeOrchCli.get('iframe1_someValue', function(value){ console.log('>> received value: ' + value); });
 	</script>
 </body>
 </html>

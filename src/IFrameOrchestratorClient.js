@@ -83,7 +83,7 @@ var iframeOrchCli = (function(opt){
 			action: action
 		};
 
-		parent.postMessage(message, _origin);
+		parent.postMessage(message, '*');
 	};
 
 	var getProperty = function(key,callback){
