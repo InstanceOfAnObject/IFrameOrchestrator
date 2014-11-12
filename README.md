@@ -67,14 +67,36 @@ Setting the `logging` option to true will show a lot of information on the conso
 	
 Setting the `allowedOrigins` property with an array of domain with enforce a security check, allowing only trusted domains the pass. This expects the protocol, i.e.: ['http://www.mydomain.com', 'https://demo.myotherdomain.com']
 
-## Client Methods (from inside the IFrame)
+## Main Page Methods (IFrameOrchestrator.js)
+### setProperty(key,value)
+Set a property value in the global scope.
+
+Property names are just strings but it's recommended to use namespaces on the property names to avoid collisions.
+
+Values can be whatever you want, from base types to json objects or even functions.
+```js
+var ifo = IFrameOrchestrator({ ... });
+ifo.setProperty('global.name', 'AlexCode');
+ifo.setProperty('global.entity', { name: 'AlexCode' });
+```
+
+### getProperty(key)
+
+Get a property value from the global scope.
+```js
+var ifo = IFrameOrchestrator({ ... });
+ifo.getProperty('global.name');
+ifo.setProperty('global.entity');
+```
+
+## Client Methods (IFrameOrchestratorClient.js)
 ### iframeOrchestratorClient.setProperty(key,value)
 
 Set a property value in the global scope.
 This property value can be accessed by the main page or even by other IFrames.
 To avoid naming collisions, consider a prefix for these property names.
 ```js
-iframeOrchestratorClient.setProperty('iframe1_someValue', 'AlexCode');
+iframeOrchestratorClient.setProperty('iframe1.someValue', 'AlexCode');
 ```
 	
 ### iframeOrchestratorClient.getProperty(key,callback)
@@ -82,5 +104,5 @@ iframeOrchestratorClient.setProperty('iframe1_someValue', 'AlexCode');
 Get a property value from the global scope.
 The result will be given in the given callback.
 ```js
-iframeOrchestratorClient.getProperty('iframe1_someValue', function(value){ console.log(value); });
+iframeOrchestratorClient.getProperty('iframe1.someValue', function(value){ console.log(value); });
 ```
