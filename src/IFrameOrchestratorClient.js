@@ -20,9 +20,7 @@
 	This File is meant to be placed in the page that will be rendered inside the IFrame.
 */
 
-var iframeOrchCli = (function(opt){
-
-	var options = opt || {};
+(function(){
 
 	var _origin = (function(){
 		var location = window.location,
@@ -128,13 +126,26 @@ var iframeOrchCli = (function(opt){
 	  delete pendingReplies[event.data.uuid];
 	};
 
+
+	var _createNativePublicFunction = function(){
+
+		return {
+			getProperty: getProperty,
+			setProperty: setProperty
+			//trigger: triggerEvent,
+			//watch: watchEvent
+		};
+	}
+
+
+
 	// start listening for messages reply
 	_addEventListener(window, "message", receiveMessage);
 
-	return {
-		get: getProperty,
-		set: setProperty
-		//trigger: triggerEvent,
-		//watch: watchEvent
-	};
+	if (typeof define === 'function' && define.amd) {
+		define(function (){ return _createNativePublicFunction(); });
+	} else {
+		window.iframeOrchestratorClient = _createNativePublicFunction();
+	}
+
 })();
