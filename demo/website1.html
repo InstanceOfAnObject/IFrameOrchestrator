@@ -9,9 +9,13 @@
 	<h1>Website 1</h1>
 
 	<script type="text/javascript">
-		iframeOrchestratorClient.setProperty('iframe1_someValue', 'AlexCode');
+		iframeOrchestratorClient.setProperty('iframe1.someValue', 'AlexCode');
+		iframeOrchestratorClient.getProperty('iframe1.someValue', function(value){ console.log('>> Received value: ' + value); });
 
-		iframeOrchestratorClient.getProperty('iframe1_someValue', function(value){ console.log('>> received value: ' + value); });
+		//get propery declared in the main page
+		iframeOrchestratorClient.getProperty('global.username', function(prop){
+			console.log('>> Received global property: ' + prop);
+		})
 	</script>
 </body>
 </html>

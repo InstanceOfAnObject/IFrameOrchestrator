@@ -85,7 +85,7 @@
 			}
 		};
 
-		console.log('Origin rejected: ' + origin);
+		_log('Origin rejected: ' + origin);
 		return false;
 	};
 
@@ -112,14 +112,26 @@
 		parent.postMessage(message, _origin);
 	};
 
+	var isValidKey = function(key){
+		return key !== undefined && key !== null && typeof key === 'string';
+	};
+
 	var _localActions = {
 		setProperty: function(key,value){
-			_log('setting the property');
-			dataStore.properties[key] = value;
+			if(isValidKey){
+				_log('setting the property: ' + key);
+				dataStore.properties[key] = value;
+			} else {
+				throw new Error('IFrameOrchestrator [setProperty] Invalid property name');
+			}
 		},		
 		getProperty: function(key){
-			_log('getting the property');
-			return dataStore.properties[key]
+			if(isValidKey){
+				_log('getting the property: ' + key);
+				return dataStore.properties[key]
+			} else {
+				throw new Error('IFrameOrchestrator [getProperty] Invalid property name');
+			}
 		}
 	};
 

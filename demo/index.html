@@ -5,13 +5,15 @@
 
 	<script type="text/javascript" src="../src/IFrameOrchestrator.js"></script>
 	<script type="text/javascript">
-		iframeOrchestrator({
+		var ifo = iframeOrchestrator({
 			//logging: true,
 			allowedOrigins: [
 				'http://localhost',
 				'http://run.plnkr.co'
 			]
 		});
+		
+		ifo.setProperty('global.username', 'myUser');
 	</script>
 </head>
 <body>

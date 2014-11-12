@@ -84,7 +84,21 @@
 		parent.postMessage(message, '*');
 	};
 
+	var isValidKey = function(key){
+		return key !== undefined && key !== null && typeof key === 'string';
+	};
+	var isValidCallback = function(callback){
+		return callback !== undefined && callback !== null && typeof callback === 'function';
+	};
+
 	var getProperty = function(key,callback){
+
+		if(!isValidKey(key)){
+			throw new Error('IFrameOrchestratorClient [getProperty] Invalid property name');
+		}
+		if(!isValidCallback(callback)){
+			throw new Error('IFrameOrchestratorClient [getProperty] [' + key + '] Invalid callback');
+		}
 
 		var uuid = _uuid(),
 				action = {
@@ -102,6 +116,10 @@
 		_sendMessage(action);
 	};
 	var setProperty = function(key,value){
+		if(!isValidKey(key)){
+			throw new Error('IFrameOrchestratorClient [setProperty] Invalid property name');
+		}
+
 		var action = {
 			type: 'setProperty',
 			data: {
@@ -121,7 +139,8 @@
 	var receiveMessage = function(event) {
 	  var callback = pendingReplies[event.data.uuid];
 
-	  callback(event.data.value);
+	  if(callback)
+	  	callback(event.data.value);
 
 	  delete pendingReplies[event.data.uuid];
 	};
