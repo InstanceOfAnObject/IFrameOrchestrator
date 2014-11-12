@@ -21,12 +21,14 @@
 				['http://www.mydomain.com', 'https://demo.mydomain.com']
 */
 
-function iframeOrchestrator(opt){
+;(function iframeOrchestrator(){
+	'use strict';
 
-	// options initialization and merge
-	var options = opt || {};
-	options.allowedOrigins = options.allowedOrigins || '*';	// default allowed origin
-	options.logging = options.logging || false;
+	var settings = {};
+	var defaultOptions = {
+		allowedOrigins: '*',
+		logging: false
+	};
 
 	// Used to store all data
 	var dataStore = {
@@ -34,7 +36,7 @@ function iframeOrchestrator(opt){
 	};
 
 	var _log = function(input){
-		if(options.logging && window.console){
+		if(settings.logging && window.console){
 			console.log(input);
 		}
 	};
@@ -71,14 +73,14 @@ function iframeOrchestrator(opt){
 
 	// validate if the origin is allowed
 	var _isAllowedOrigin = function(origin){
-		if(options.allowedOrigins === '*'){
+		if(settings.allowedOrigins === '*'){
 			return true;
 		}
 
 		origin = origin.toLowerCase();
 
-		for (var i = options.allowedOrigins.length - 1; i >= 0; i--) {
-			if(origin === options.allowedOrigins[i].toLowerCase()){
+		for (var i = settings.allowedOrigins.length - 1; i >= 0; i--) {
+			if(origin === settings.allowedOrigins[i].toLowerCase()){
 				return true;
 			}
 		};
@@ -142,8 +144,39 @@ function iframeOrchestrator(opt){
 	  _actions[event.data.action.type](event);
 	}
 
+
+
+
+	var _createNativePublicFunction = function(){
+
+		function processOptions(options){
+			options = options || {};
+
+			if ('object' !== typeof options){
+				throw new TypeError('Options is not an object.');
+			}
+
+			for (var option in defaultOptions) {
+				if (defaultOptions.hasOwnProperty(option)){
+					settings[option] = options.hasOwnProperty(option) ? options[option] : defaultOptions[option];
+				}
+			}
+		}
+
+		return function(options){
+			processOptions(options);
+		};
+	}
+
+
+
 	// start listening for messages
 	_addEventListener(window, "message", receiveMessage);
 
-	return {};
-};
+	if (typeof define === 'function' && define.amd) {
+		define(function (){ return _createNativePublicFunction(); });
+	} else {
+		window.iframeOrchestrator = _createNativePublicFunction();
+	}
+
+})();
