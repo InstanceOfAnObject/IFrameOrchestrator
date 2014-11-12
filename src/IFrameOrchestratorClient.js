@@ -73,7 +73,7 @@ var iframeOrchCli = (function(opt){
 				rnd = Math.random(),
 				nowUnique = (now * rnd);
 
-		return ('' + now + '-' + nowUnique).replace('.','-');
+		return (now + '.' + nowUnique);
 	};
 
 	var _sendMessage = function(action){
