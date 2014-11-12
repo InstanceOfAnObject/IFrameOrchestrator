@@ -112,15 +112,24 @@
 		parent.postMessage(message, _origin);
 	};
 
-	// all the possible objects that can be called from the client IFrame
-	var _actions = {
-		setProperty: function(event){
+	var _localActions = {
+		setProperty: function(key,value){
 			_log('setting the property');
-			dataStore.properties[event.data.action.data.key] = event.data.action.data.value;
+			dataStore.properties[key] = value;
+		},		
+		getProperty: function(key){
+			_log('getting the property');
+			return dataStore.properties[key]
+		}
+	};
+
+	// all the possible objects that can be called from the client IFrame
+	var _messageActions = {
+		setProperty: function(event){
+			_localActions.setProperty(event.data.action.data.key, event.data.action.data.value);
 		},
 		getProperty: function(event){
-			_log('getting the property');
-			var value = dataStore.properties[event.data.action.data.key];
+			var value = _localActions.getProperty(event.data.action.data.key);
 
 			var result = {
 				uuid: event.data.action.uuid,
@@ -141,7 +150,7 @@
 	  _log('got your message');
 	  
 	  // call the appropriate action type method
-	  _actions[event.data.action.type](event);
+	  _messageActions[event.data.action.type](event);
 	}
 
 
@@ -165,6 +174,11 @@
 
 		return function(options){
 			processOptions(options);
+
+			return {
+				getProperty: _localActions.getProperty,
+				setProperty: _localActions.setProperty
+			}
 		};
 	}
 
