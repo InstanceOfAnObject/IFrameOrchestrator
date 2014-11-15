@@ -22,7 +22,7 @@
 
 (function(){
 	'use strict';
-	
+
 	/* This is where all the operations that request data to 
 			the orchestrator wait for their replies.
 		The key is a UUID that is used to get the request object
@@ -177,7 +177,7 @@
 			var name = event.data.name,
 					data = event.data.data,
 					handler = subscribedEvents[name];
-			console.log(event);
+			
 			if(handler !== undefined && typeof handler === 'function'){
 				handler(data);
 			}
