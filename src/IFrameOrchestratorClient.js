@@ -21,14 +21,8 @@
 */
 
 (function(){
-
-	var _origin = (function(){
-		var location = window.location,
-				origin = location.protocol + '//' + location.host + (location.port ? ':' + location.port : '');
-
-		return origin;
-	})();
-
+	'use strict';
+	
 	/* This is where all the operations that request data to 
 			the orchestrator wait for their replies.
 		The key is a UUID that is used to get the request object
@@ -58,7 +52,7 @@
 	                return function(){
 	                    f1.apply(this,arguments);
 	                    f2.apply(this,arguments);
-	                }
+	                };
 	            })(obj[evt], fnc);
 	        }
 	        obj[evt] = fnc;
@@ -173,8 +167,9 @@
 		getPropertyReply: function(event){
 		  var callback = pendingReplies[event.data.uuid];
 
-		  if(callback)
+		  if(callback){
 		  	callback(event.data.value);
+		  }
 
 		  delete pendingReplies[event.data.uuid];
 		},
@@ -206,7 +201,7 @@
 			subscribeEvent: subscribeEvent,
 			unsubscribeEvent: unsubscribeEvent
 		};
-	}
+	};
 
 
 

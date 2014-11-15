@@ -63,7 +63,7 @@
 	                return function(){
 	                    f1.apply(this,arguments);
 	                    f2.apply(this,arguments);
-	                }
+	                };
 	            })(obj[evt], fnc);
 	        }
 	        obj[evt] = fnc;
@@ -84,7 +84,7 @@
 			if(origin === settings.allowedOrigins[i].toLowerCase()){
 				return true;
 			}
-		};
+		}
 
 		_log('Origin rejected: ' + origin);
 		return false;
@@ -103,16 +103,6 @@
 		return false;
 	};
 
-	var _sendMessage = function(event){
-		var message = {
-			__ifo: true,
-			__ts: new Date()*1,
-			action: action
-		};
-
-		parent.postMessage(message, _origin);
-	};
-
 	var isValidKey = function(key){
 		return key !== undefined && key !== null && typeof key === 'string';
 	};
@@ -129,7 +119,7 @@
 		getProperty: function(key){
 			if(isValidKey){
 				_log('getting the property: ' + key);
-				return dataStore.properties[key]
+				return dataStore.properties[key];
 			} else {
 				throw new Error('IFrameOrchestrator [getProperty] Invalid property name');
 			}
@@ -182,7 +172,7 @@
 					};
 
 					subscriptions[i].source.postMessage(result, subscriptions[i].origin);
-				};
+				}
 			}
 		}
 	};
@@ -197,7 +187,7 @@
 	  
 	  // call the appropriate action type method
 	  _messageActions[event.data.action.type](event);
-	}
+	};
 
 
 
@@ -224,9 +214,9 @@
 			return {
 				getProperty: _localActions.getProperty,
 				setProperty: _localActions.setProperty
-			}
+			};
 		};
-	}
+	};
 
 
 
