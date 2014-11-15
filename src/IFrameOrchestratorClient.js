@@ -32,8 +32,10 @@
 	/* This is where all the operations that request data to 
 			the orchestrator wait for their replies.
 		The key is a UUID that is used to get the request object
-			when the reply arrives.	*/
-	var pendingReplies = {};
+			when the reply arrives.	
+		Events are identified only by their name */
+	var pendingReplies = {},
+			subscribedEvents = {};
 
 	// cross browser addEventListener (https://gist.github.com/eduardocereto/955642)
 	var _addEventListener = function(obj, evt, fnc) {
@@ -132,17 +134,66 @@
 	};
 
 
-	var triggerEvent = function(name,data){ /* not implemented */ };
-	var watchEvent = function(name,handler){ /* not implemented */ };
+	var triggerEvent = function(name,data){
+		if(!isValidKey(name)){
+			throw new Error('IFrameOrchestratorClient [triggerEvent] Invalid event name');
+		}
+
+		var action = {
+			type: 'triggerEvent',
+			event: {
+				name: name,
+				data: data
+			}
+		};
+
+		_sendMessage(action);
+	};
+	var subscribeEvent = function(name,handler){
+		if(!isValidKey(name)){
+			throw new Error('IFrameOrchestratorClient [subscribeEvent] Invalid event name');
+		}
+
+		var action = {
+			type: 'subscribeEvent',
+			event: {
+				name: name
+			}
+		};
+
+		subscribedEvents[name] = handler;
+
+		_sendMessage(action);
+	};
+	var unsubscribeEvent = function(){
+		// not implemented //
+	};
+
+	var inboundActions = {
+		getPropertyReply: function(event){
+		  var callback = pendingReplies[event.data.uuid];
+
+		  if(callback)
+		  	callback(event.data.value);
+
+		  delete pendingReplies[event.data.uuid];
+		},
+		eventBroadcast: function(event){
+			var name = event.data.name,
+					data = event.data.data,
+					handler = subscribedEvents[name];
+			console.log(event);
+			if(handler !== undefined && typeof handler === 'function'){
+				handler(data);
+			}
+		}
+	};
 
 	// messages reply receiver
 	var receiveMessage = function(event) {
-	  var callback = pendingReplies[event.data.uuid];
+		var action = event.data.type;
 
-	  if(callback)
-	  	callback(event.data.value);
-
-	  delete pendingReplies[event.data.uuid];
+		inboundActions[action](event);
 	};
 
 
@@ -150,9 +201,10 @@
 
 		return {
 			getProperty: getProperty,
-			setProperty: setProperty
-			//trigger: triggerEvent,
-			//watch: watchEvent
+			setProperty: setProperty,
+			triggerEvent: triggerEvent,
+			subscribeEvent: subscribeEvent,
+			unsubscribeEvent: unsubscribeEvent
 		};
 	}
 

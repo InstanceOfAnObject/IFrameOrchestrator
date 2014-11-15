@@ -32,7 +32,8 @@
 
 	// Used to store all data
 	var dataStore = {
-		properties: {}
+		properties: {},			// global properties store
+		subscriptions: {}		// events subscriptions
 	};
 
 	var _log = function(input){
@@ -144,12 +145,45 @@
 			var value = _localActions.getProperty(event.data.action.data.key);
 
 			var result = {
+				type: 'getPropertyReply',
 				uuid: event.data.action.uuid,
 				value: value
 			};
 
 			_log('replying to: ' + event.data.action.uuid);
 			event.source.postMessage(result, event.origin);
+		},
+		subscribeEvent: function(event){
+			_log('subscribing request to event: ' + event.data.action.event.name);
+
+			var name = event.data.action.event.name;
+
+			var subscription = {
+				source: event.source,
+				origin: event.origin
+			};
+
+			dataStore.subscriptions[name] = dataStore.subscriptions[name] || [];
+			dataStore.subscriptions[name].push(subscription);
+		},
+		triggerEvent: function(event){
+			_log('trigger request of event: ' + event.data.action.event.name);
+
+			var name = event.data.action.event.name,
+					data = event.data.action.event.data,
+					subscriptions = dataStore.subscriptions[name];
+
+			if(subscriptions && subscriptions.length > 0){
+				for (var i = subscriptions.length - 1; i >= 0; i--) {
+					var result = {
+						type: 'eventBroadcast',
+						name: name,
+						data: data
+					};
+
+					subscriptions[i].source.postMessage(result, subscriptions[i].origin);
+				};
+			}
 		}
 	};
 

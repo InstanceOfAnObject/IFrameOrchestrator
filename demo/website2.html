@@ -6,6 +6,15 @@
 <body>
 	<h1>Website 2</h1>
 
+	<ul id="content"></ul>
+
 	<script type="text/javascript" src="../src/IFrameOrchestratorClient.js"></script>
+	<script type="text/javascript">
+		iframeOrchestratorClient.subscribeEvent('Event_A', function(data){
+			var item = document.createElement('li');
+			item.innerHTML = data.value;
+			document.getElementById('content').appendChild(item);
+		});
+	</script>
 </body>
 </html>

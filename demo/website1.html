@@ -15,7 +15,14 @@
 		//get propery declared in the main page
 		iframeOrchestratorClient.getProperty('global.username', function(prop){
 			console.log('>> Received global property: ' + prop);
-		})
+		});
+
+		// trigger an event called 'Event_A' passing an object as data 
+		function triggerEventA(){
+			iframeOrchestratorClient.triggerEvent('Event_A', { value: 'Hello from Website 1!' })
+		}
 	</script>
+
+	<input type="button" value="Trigger Event A" onclick="triggerEventA()" />
 </body>
 </html>
