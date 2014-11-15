@@ -56,14 +56,14 @@ See complete example in the source code, [demo folder](https://github.com/Instan
 
 ## Options
 ### logging
-	default: false
-	type: boolean
+`default`: false  
+`type`: boolean
   
 Setting the `logging` option to true will show a lot of information on the console that might be usefull for troubleshooting.
 
 ### allowedOrigins
-	default: all
-	type: array
+`default`: all  
+`type`: array
 	
 Setting the `allowedOrigins` property with an array of domain with enforce a security check, allowing only trusted domains the pass. This expects the protocol, i.e.: ['http://www.mydomain.com', 'https://demo.myotherdomain.com']
 
@@ -90,7 +90,7 @@ ifo.setProperty('global.entity');
 ```
 
 ## Client Methods (IFrameOrchestratorClient.js)
-### iframeOrchestratorClient.setProperty(key,value)
+### setProperty(key,value)
 
 Set a property value in the global scope.
 This property value can be accessed by the main page or even by other IFrames.
@@ -99,10 +99,22 @@ To avoid naming collisions, consider a prefix for these property names.
 iframeOrchestratorClient.setProperty('iframe1.someValue', 'AlexCode');
 ```
 	
-### iframeOrchestratorClient.getProperty(key,callback)
+### getProperty(key,callback)
 
 Get a property value from the global scope.
 The result will be given in the given callback.
 ```js
 iframeOrchestratorClient.getProperty('iframe1.someValue', function(value){ console.log(value); });
 ```
+
+### subscribeEvent(name,handler)
+`name`: event tame  
+`handler`: callback function
+	
+Subscribes to an event and the callback is called each time the event is triggered.
+
+### triggerEvent(name,data)
+`name`: event tame    
+`handler`: data to be passed to the event handlers
+	
+Triggers the event. All the subscribers will be notified.
