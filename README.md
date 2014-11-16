@@ -68,7 +68,7 @@ Setting the `allowedOrigins` property with an array of domain with enforce a sec
 
 ## Main Page Methods (IFrameOrchestrator.js)
 ### setProperty(key,value)
-`key`: property name 
+`key`: property name  
 `value`: property value  
 Set a property value in the global scope.  
 Property names are just strings but it's recommended to use namespaces on the property names to avoid collisions.  
@@ -94,7 +94,7 @@ Triggers an event from the main page.
 
 ## Client Methods (IFrameOrchestratorClient.js)
 ### setProperty(key,value)
-`key`: property name 
+`key`: property name  
 `value`: property value  
 Set a property value in the global scope.
 This property value can be accessed by the main page or even by other IFrames.
@@ -105,7 +105,7 @@ iframeOrchestratorClient.setProperty('iframe1.someValue', 'AlexCode');
 	
 ### getProperty(key,callback)
 `key`: property name  
-`callback`: callback function to receive the value 
+`callback`: callback function to receive the value  
 Get a property value from the global scope.
 The result will be given in the given callback.
 ```js
