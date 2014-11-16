@@ -159,8 +159,23 @@
 
 		_sendMessage(action);
 	};
-	var unsubscribeEvent = function(){
-		// not implemented //
+	var unsubscribeEvent = function(name){
+		if(!isValidKey(name)){
+			throw new Error('IFrameOrchestratorClient [subscribeEvent] Invalid event name');
+		}
+
+		if(subscribedEvents[name] !== undefined){
+			var action = {
+				type: 'unsubscribeEvent',
+				event: {
+					name: name
+				}
+			};
+
+			delete subscribedEvents[name];
+
+			_sendMessage(action);
+		}
 	};
 
 	var inboundActions = {

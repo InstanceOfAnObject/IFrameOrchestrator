@@ -170,6 +170,19 @@
 			dataStore.subscriptions[name] = dataStore.subscriptions[name] || [];
 			dataStore.subscriptions[name].push(subscription);
 		},
+		unsubscribeEvent: function(event){
+			_log('unsubscribing request to event: ' + event.data.action.event.name);
+
+			var name = event.data.action.event.name;
+
+			if(dataStore.subscriptions[name] !== undefined){
+				for (var i = dataStore.subscriptions[name].length - 1; i >= 0; i--) {
+					if(dataStore.subscriptions[name][i].source === event.source){
+						dataStore.subscriptions[name].splice(i, 1);
+					}
+				}
+			}
+		},
 		triggerEvent: function(event){
 			_log('trigger request of event: ' + event.data.action.event.name);
 
