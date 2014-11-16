@@ -23,15 +23,17 @@
 		<div class="mainPageGlobal">
 			<h1>Parent Page</h1>
 
-			<ul class="list">
-				<li>
-					<label>Enter some text:</label>
-					<input type="text" id="txtInput" onchange="ifo.setProperty('global.textInput', this.value);" />
-				</li>
-				<li>
-					<input type="button" value="Broadcast value" onclick="ifo.triggerEvent('global.textChanged', document.getElementById('txtInput').value)" />
-				</li>
-			</ul>
+			<div class="actions">
+				<ul class="list">
+					<li>
+						<label>Enter some text:</label>
+						<input type="text" id="txtInput" onchange="ifo.setProperty('global.textInput', this.value);" />
+					</li>
+					<li>
+						<input type="button" value="Broadcast value" onclick="ifo.triggerEvent('global.textChanged', document.getElementById('txtInput').value)" />
+					</li>
+				</ul>
+			</div>
 		</div>
 		<iframe class="iframe1" src="website1.html"></iframe>
 		<iframe class="iframe2" src="website2.html"></iframe>		

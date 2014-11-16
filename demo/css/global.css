@@ -11,9 +11,10 @@ div.replies{
 ul.list {
 	list-style-type: none;
 	margin: 0;
-	padding: 0;
+	padding: 0 10px;
 }
-ul.list li{
-	padding: 2px;
-	margin: 0 0 0 3px;
+div.actions ul.list li{
+	padding: 0 0 0 5px;
+	margin: 10px 0 0 0;
+	border-left: solid 2px #000;
 }

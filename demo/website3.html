@@ -39,6 +39,10 @@
 					output(value);
 				});
 		}
+
+		iframeOrchestratorClient.subscribeEvent('global.textChanged', function(data){
+			output(data);
+		});
 	</script>
 </body>
 </html>

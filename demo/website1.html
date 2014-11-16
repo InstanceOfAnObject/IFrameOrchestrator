@@ -14,7 +14,12 @@
 		<h2>Actions</h2>
 		<ul class="list">
 			<li>
-				<input type="button" value="Trigger Hello" onclick="triggerEventA()" />
+				<input type="button" value="Trigger Hello" onclick="triggerHello()" />
+			</li>
+			<li>
+				<label>Global Text Changed Event</label><br/>
+				<input type="button" value="Subscribe" onclick="subscribeGlobalTextChangedEvent()" />
+				<input type="button" value="Unsubscribe" onclick="unsubscribeGlobalTextChangedEvent()" />
 			</li>
 		</ul>
 	</div>
@@ -41,8 +46,18 @@
 		});
 
 		// trigger an event called 'Event_A' passing an object as data 
-		function triggerEventA(){
+		function triggerHello(){
 			iframeOrchestratorClient.triggerEvent('website1.hello', { value: 'Hello from Website 1!' })
+		}
+
+		function subscribeGlobalTextChangedEvent() {
+			iframeOrchestratorClient.subscribeEvent('global.textChanged', function(data){
+				output(data);
+			});
+		}
+
+		function unsubscribeGlobalTextChangedEvent(){
+			iframeOrchestratorClient.unsubscribeEvent('global.textChanged');
 		}
 	</script>
 </body>
