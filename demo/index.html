@@ -3,6 +3,8 @@
 <head>
 	<title>IFrame Orchestrator Demo</title>
 
+	<link rel="stylesheet" type="text/css" href="css/global.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
 	<script type="text/javascript" src="../src/IFrameOrchestrator.js"></script>
 	<script type="text/javascript">
 		var ifo = iframeOrchestrator({
@@ -17,8 +19,25 @@
 	</script>
 </head>
 <body>
-	<iframe src="website1.html"></iframe>
-	<iframe src="website2.html"></iframe>
-	<!--<iframe src="http://run.plnkr.co/h5MBGZzY8vj0nzhG/"></iframe>-->
+	<div class="MainPage">
+		<div class="mainPageGlobal">
+			<h1>Parent Page</h1>
+
+			<ul class="list">
+				<li>
+					<label>Enter some text:</label>
+					<input type="text" id="txtInput" onchange="ifo.setProperty('global.textInput', this.value);" />
+				</li>
+				<li>
+					<input type="button" value="Broadcast value" onclick="ifo.triggerEvent('global.textChanged', document.getElementById('txtInput').value)" />
+				</li>
+			</ul>
+		</div>
+		<iframe class="iframe1" src="website1.html"></iframe>
+		<iframe class="iframe2" src="website2.html"></iframe>		
+		<iframe class="iframe3" src="website3.html"></iframe>		
+	</div>
+	
+	
 </body>
 </html>

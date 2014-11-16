@@ -1,0 +1,19 @@
+div.actions{
+	float: left;
+	width: 49%;
+	overflow: hidden;
+}
+div.replies{
+	float: right;
+	width: 49%;
+	overflow: hidden;
+}
+ul.list {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+ul.list li{
+	padding: 2px;
+	margin: 0 0 0 3px;
+}
