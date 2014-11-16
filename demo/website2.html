@@ -11,7 +11,13 @@
 
 	<div class="actions">
 		<h2>Actions</h2>
-		<ul class="list"></ul>
+		<ul class="list">
+			<li>
+				<label>Trigger event on keyup:</label><br/>
+				<label>website2.textbox</label>
+				<input type="text" id="txtInput" onkeyup="triggerTextChanged(this.value)" />
+			</li>
+		</ul>
 	</div>
 	<div class="replies">
 		<h2>Replies</h2>
@@ -24,6 +30,10 @@
 			var item = document.createElement('li');
 			item.innerHTML = value;
 			document.getElementById('replies').appendChild(item);
+		}
+
+		function triggerTextChanged(value){
+			iframeOrchestratorClient.triggerEvent('website2.textChanged', value);
 		}
 
 		iframeOrchestratorClient.subscribeEvent('website1.hello', function(data){

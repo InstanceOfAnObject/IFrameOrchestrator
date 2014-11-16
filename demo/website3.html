@@ -15,6 +15,11 @@
 			<li>
 				<input type="button" value="Get Parent Page Text" onclick="btnGetParentPageText()" />
 			</li>
+			<li>
+				<label>website2.textChanged Event</label><br/>
+				<input type="button" value="Subscribe" onclick="subscribeWebsite2TextChanged()" />
+				<input type="button" value="Unsubscribe" onclick="unsubscribeWebsite2TextChanged()" />
+			</li>
 		</ul>
 	</div>
 	<div class="replies">
@@ -43,6 +48,15 @@
 		iframeOrchestratorClient.subscribeEvent('global.textChanged', function(data){
 			output(data);
 		});
+
+		function subscribeWebsite2TextChanged(){
+			iframeOrchestratorClient.subscribeEvent('website2.textChanged', function(data){
+				output(data);
+			});
+		}
+		function unsubscribeWebsite2TextChanged(){
+			iframeOrchestratorClient.unsubscribeEvent('website2.textChanged');
+		}
 	</script>
 </body>
 </html>
