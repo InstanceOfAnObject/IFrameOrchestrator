@@ -123,6 +123,20 @@
 			} else {
 				throw new Error('IFrameOrchestrator [getProperty] Invalid property name');
 			}
+		},
+		triggerEvent: function(name,data){
+			var subscriptions = dataStore.subscriptions[name];
+			if(subscriptions && subscriptions.length > 0){
+				for (var i = subscriptions.length - 1; i >= 0; i--) {
+					var result = {
+						type: 'eventBroadcast',
+						name: name,
+						data: data
+					};
+
+					subscriptions[i].source.postMessage(result, subscriptions[i].origin);
+				}
+			}
 		}
 	};
 
@@ -213,7 +227,8 @@
 
 			return {
 				getProperty: _localActions.getProperty,
-				setProperty: _localActions.setProperty
+				setProperty: _localActions.setProperty,
+				triggerEvent: _localActions.triggerEvent
 			};
 		};
 	};
