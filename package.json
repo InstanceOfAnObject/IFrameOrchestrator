@@ -1,6 +1,6 @@
 {
   "name": "IFrameOrchestrator",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Establish communication between IFrames and parent Window",
   "main": "index.js",
   "scripts": {
