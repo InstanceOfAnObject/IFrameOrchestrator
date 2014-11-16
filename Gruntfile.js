@@ -74,6 +74,6 @@ module.exports = function(grunt) {
       3. Push to git
   */
   grunt.registerTask('patch', ['jshint', 'bump-only:patch', 'clean', 'uglify', 'bump-commit']);
-  grunt.registerTask('patch', ['jshint', 'bump-only:minor', 'clean', 'uglify', 'bump-commit']);
-  grunt.registerTask('patch', ['jshint', 'bump-only:major', 'clean', 'uglify', 'bump-commit']);
+  grunt.registerTask('minor', ['jshint', 'bump-only:minor', 'clean', 'uglify', 'bump-commit']);
+  grunt.registerTask('major', ['jshint', 'bump-only:major', 'clean', 'uglify', 'bump-commit']);
 };
