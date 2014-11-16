@@ -2,7 +2,7 @@ IFrameOrchestrator
 ==================
 [![Build Status](https://travis-ci.org/InstanceOfAnObject/IFrameOrchestrator.svg?branch=master)](https://travis-ci.org/InstanceOfAnObject/IFrameOrchestrator)
 
-Orchestrates messages between and IFrame and it's parent page and also between IFrames on the same page.
+Orchestrates messages between and IFrame and its parent page and also between IFrames on the same page.
 
 It also does this With IFrames from different domains!
 
