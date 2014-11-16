@@ -1,6 +1,6 @@
 {
   "name": "IFrameOrchestrator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Establish communication between IFrames and parent Window",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,7 @@
   "homepage": "https://github.com/InstanceOfAnObject/IFrameOrchestrator",
   "dependencies": {
     "grunt": "^0.4.5",
+    "grunt-bump": "0.0.16",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-jasmine": "^0.8.1",
     "grunt-contrib-jshint": "^0.10.0",
