@@ -45,7 +45,7 @@ module.exports = function(grunt) {
         tagName: 'v%VERSION%',
         tagMessage: 'Version %VERSION%',
         push: false,
-        pushTo: 'origin/master',
+        pushTo: 'upstream',
         gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d',
         globalReplace: false
       }
@@ -61,9 +61,19 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', ['jshint', 'clean', 'uglify']);
   grunt.registerTask('test', ['jshint', 'clean', 'uglify']);
-
-  grunt.registerTask('patch', ['jshint', 'bump-only:patch', 'clean', 'uglify', 'bump-commit']);
-  
   grunt.registerTask('travis', ['jshint']);
 
+  // change version and generate minified version
+  /*
+    To push a new version:
+      1. commit everything you want to be present in the next version
+      2. execute:
+        2.1: patch version:   grunt patch
+        2.2: minor verion:    grunt minor
+        2.3: major version:   grunt major
+      3. Push to git
+  */
+  grunt.registerTask('patch', ['jshint', 'bump-only:patch', 'clean', 'uglify', 'bump-commit']);
+  grunt.registerTask('patch', ['jshint', 'bump-only:minor', 'clean', 'uglify', 'bump-commit']);
+  grunt.registerTask('patch', ['jshint', 'bump-only:major', 'clean', 'uglify', 'bump-commit']);
 };
