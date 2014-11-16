@@ -58,22 +58,20 @@ See complete example in the source code, [demo folder](https://github.com/Instan
 ## Options
 ### logging
 `default`: false  
-`type`: boolean
-  
+`type`: boolean  
 Setting the `logging` option to true will show a lot of information on the console that might be usefull for troubleshooting.
 
 ### allowedOrigins
 `default`: all  
-`type`: array
-	
+`type`: array  
 Setting the `allowedOrigins` property with an array of domain with enforce a security check, allowing only trusted domains the pass. This expects the protocol, i.e.: ['http://www.mydomain.com', 'https://demo.myotherdomain.com']
 
 ## Main Page Methods (IFrameOrchestrator.js)
 ### setProperty(key,value)
-Set a property value in the global scope.
-
-Property names are just strings but it's recommended to use namespaces on the property names to avoid collisions.
-
+`key`: property name  
+`value`: property value  
+Set a property value in the global scope.  
+Property names are just strings but it's recommended to use namespaces on the property names to avoid collisions.  
 Values can be whatever you want, from base types to json objects or even functions.
 ```js
 var ifo = IFrameOrchestrator({ ... });
@@ -82,7 +80,7 @@ ifo.setProperty('global.entity', { name: 'AlexCode' });
 ```
 
 ### getProperty(key)
-
+`key`: property name  
 Get a property value from the global scope.
 ```js
 var ifo = IFrameOrchestrator({ ... });
@@ -90,9 +88,14 @@ ifo.getProperty('global.name');
 ifo.setProperty('global.entity');
 ```
 
+### triggerEvent(name)
+`name`: event name  
+Triggers an event from the main page.
+
 ## Client Methods (IFrameOrchestratorClient.js)
 ### setProperty(key,value)
-
+`key`: property name  
+`value`: property value  
 Set a property value in the global scope.
 This property value can be accessed by the main page or even by other IFrames.
 To avoid naming collisions, consider a prefix for these property names.
@@ -101,7 +104,8 @@ iframeOrchestratorClient.setProperty('iframe1.someValue', 'AlexCode');
 ```
 	
 ### getProperty(key,callback)
-
+`key`: property name  
+`callback`: callback function to receive the value  
 Get a property value from the global scope.
 The result will be given in the given callback.
 ```js
@@ -110,12 +114,14 @@ iframeOrchestratorClient.getProperty('iframe1.someValue', function(value){ conso
 
 ### subscribeEvent(name,handler)
 `name`: event tame  
-`handler`: callback function
-	
+`handler`: callback function that is called each time the event is triggered  
 Subscribes to an event and the callback is called each time the event is triggered.
 
+### unsubscribeEvent(name)
+`name`: event tame  
+Unsubscribes an event.
+
 ### triggerEvent(name,data)
-`name`: event tame    
-`handler`: data to be passed to the event handlers
-	
+`name`: event tame  
+`data`: data to be passed to the event handlers  
 Triggers the event. All the subscribers will be notified.
