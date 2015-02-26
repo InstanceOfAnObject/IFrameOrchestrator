@@ -88,9 +88,16 @@ ifo.getProperty('global.name');
 ifo.setProperty('global.entity');
 ```
 
+### subscribeEvent(name, handler)
+`name`: event name  
+`handler`: callback function that is called each time the event is triggered
+Subscribes to an event from the host.
+This allows to execute tasks on the host page upon events triggered anywhere.
+
 ### triggerEvent(name)
 `name`: event name  
 Triggers an event from the main page.
+These events can be subscribed either on the host or the clients.
 
 ## Client Methods (IFrameOrchestratorClient.js)
 ### setProperty(key,value)
