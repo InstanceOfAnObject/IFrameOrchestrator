@@ -12,7 +12,7 @@
 		});
 		
 		ifo.setProperty('global.username', 'myUser');
-		ifo.subscribeEvent('website1.hello', function(){ console.log('asdasdas') });
+		ifo.subscribeEvent('website1.hello', function(data){ console.log('Received: ' + data.value) });
 	</script>
 </head>
 <body>

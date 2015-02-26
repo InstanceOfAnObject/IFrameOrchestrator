@@ -130,7 +130,7 @@
 				for (var i = subscriptions.length - 1; i >= 0; i--) {
 					
 					if(subscriptions[i].source === 'host'){
-						subscriptions[i].handler();
+						subscriptions[i].handler(data);
 					} else {
 						var result = {
 							type: 'eventBroadcast',
@@ -220,7 +220,7 @@
 					
 					if(subscriptions[i].source === 'host'){
 						// local event handler
-						subscriptions[i].handler();	// execute handler
+						subscriptions[i].handler(data);	// execute handler
 					} else {
 						var result = {
 							type: 'eventBroadcast',

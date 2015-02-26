@@ -203,7 +203,9 @@
 	var receiveMessage = function(event) {
 		var action = event.data.type;
 
-		inboundActions[action](event);
+		if (action && inboundActions[action]){
+			inboundActions[action](event);
+		}
 	};
 
 
