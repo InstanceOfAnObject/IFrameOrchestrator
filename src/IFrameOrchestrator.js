@@ -128,15 +128,40 @@
 			var subscriptions = dataStore.subscriptions[name];
 			if(subscriptions && subscriptions.length > 0){
 				for (var i = subscriptions.length - 1; i >= 0; i--) {
-					var result = {
-						type: 'eventBroadcast',
-						name: name,
-						data: data
-					};
-
-					subscriptions[i].source.postMessage(result, subscriptions[i].origin);
+					
+					if(subscriptions[i].source === 'host'){
+						subscriptions[i].handler();
+					} else {
+						var result = {
+							type: 'eventBroadcast',
+							name: name,
+							data: data
+						};
+	
+						subscriptions[i].source.postMessage(result, subscriptions[i].origin);
+					}
 				}
 			}
+		},
+		subscribeEvent: function(name,handler){
+			_log('IFrameOrchestrator subscribing to event: ' + name);
+			
+			if(!isValidKey(name)){
+				throw new Error('IFrameOrchestrator [subscribeEvent] Invalid event name');
+			}
+			
+			/* create a special subscription that will be identified as internal 
+				this is important because this subscription cannot be propagated, it should only be handled internally
+			*/
+
+			var subscription = {
+				source: 'host',
+				handler: handler
+			};
+
+			dataStore.subscriptions[name] = dataStore.subscriptions[name] || [];
+			dataStore.subscriptions[name].push(subscription);
+			
 		}
 	};
 
@@ -192,13 +217,19 @@
 
 			if(subscriptions && subscriptions.length > 0){
 				for (var i = subscriptions.length - 1; i >= 0; i--) {
-					var result = {
-						type: 'eventBroadcast',
-						name: name,
-						data: data
-					};
-
-					subscriptions[i].source.postMessage(result, subscriptions[i].origin);
+					
+					if(subscriptions[i].source === 'host'){
+						// local event handler
+						subscriptions[i].handler();	// execute handler
+					} else {
+						var result = {
+							type: 'eventBroadcast',
+							name: name,
+							data: data
+						};
+	
+						subscriptions[i].source.postMessage(result, subscriptions[i].origin);	
+					}
 				}
 			}
 		}
@@ -241,7 +272,8 @@
 			return {
 				getProperty: _localActions.getProperty,
 				setProperty: _localActions.setProperty,
-				triggerEvent: _localActions.triggerEvent
+				triggerEvent: _localActions.triggerEvent,
+				subscribeEvent: _localActions.subscribeEvent
 			};
 		};
 	};
