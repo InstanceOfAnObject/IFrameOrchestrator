@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="../../../src/IFrameOrchestratorClient.js"></script>
+    </head>
+    <body>
+        <h2>Demo items list page</h2>
+        
+        <a id="bla" href="item.html">Go to item page</a>
+        
+        
+        
+        <script>
+            document.getElementById('bla').onclick = function(){
+                iframeOrchestratorClient.triggerEvent('frame.navigate', this.href);
+                return false;
+            };
+        </script>
+    </body>
+</html>

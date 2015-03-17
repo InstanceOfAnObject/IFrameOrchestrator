@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Navigation demo</title>
+        
+        <link rel="stylesheet" href="css/default.css" type="text/css" />
+        
+    	<script type="text/javascript" src="../../src/IFrameOrchestrator.js"></script>
+    	<script type="text/javascript">
+    		var ifo = iframeOrchestrator({
+    			logging: true
+    		});
+    		
+    		ifo.subscribeEvent('frame.navigate', function(url, args){
+    		    window.location.hash = '/_f' + args.iframe.id + '=' + url;
+    		});
+    		
+
+    		var processHash = function(event){
+    		    var iframeId = null,
+    		        url = null,
+    		        hash = window.location.hash;
+    		        
+    		    if(hash){
+    		        hash = hash.substring(2);
+    		        var params = hash.split('&');
+    		        
+    		        for (var p = 0; p < params.length; p++) {
+    		            var param = params[p].split('=');
+    		            if(param[0].indexOf('_f') === 0){
+    		                var iframeId = param[0].substring(2),
+    		                    url = param[1];
+    		                    
+    		                // change iframe url without affecting history
+    		                document.getElementById(iframeId).contentWindow.location.replace(url);
+    		            }
+    		        }
+    		    } else {
+    		        var iframes = document.getElementsByTagName('iframe');
+    		        for (var i = 0; i < iframes.length; i++) {
+    		            var defaultSrc = iframes[i].getAttribute('default_src');
+    		            if(defaultSrc){
+    		                iframes[i].contentWindow.location.replace(defaultSrc);
+    		            }
+    		        }
+    		    }
+    		};
+    		
+    		window.onhashchange = processHash;
+    		window.onload = processHash;
+    	</script>
+    </head>
+    <body>
+        <h1>Navigation demo</h1>
+        
+        <div id="leftPanel">
+            <h2>Description</h2>
+            <ul>
+                <li>Navigating inside the IFrame won't trigger a full parent page refresh</li>
+                <li>You can bookmark the page URL, the IFrame will load the expected page</li>
+                <li>Nothing will break if you go directly to the IFrame page (not inside IFrame)</li>
+            </ul>
+        </div>
+        
+        <div id="contentPanel">
+            <!-- set the default src as default_src so that it doesn't load automatically -->
+            <iframe id="iframe1" default_src="pages/list.html"></iframe>
+        </div>
+    </body>
+</html>

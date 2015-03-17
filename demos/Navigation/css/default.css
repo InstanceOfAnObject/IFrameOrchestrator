@@ -1,0 +1,12 @@
+
+#leftPanel {
+    
+    width: 240px;
+    background-color: #dcdcdc;
+    padding: 10px;
+    display: none;
+}
+
+#iframe1 {
+    width: 100%;
+}
