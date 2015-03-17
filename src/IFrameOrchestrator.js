@@ -212,15 +212,16 @@
 			_log('trigger request of event: ' + event.data.action.event.name);
 
 			var name = event.data.action.event.name,
-					data = event.data.action.event.data,
-					subscriptions = dataStore.subscriptions[name];
+				data = event.data.action.event.data,
+				iframe = event.data.iframe,
+				subscriptions = dataStore.subscriptions[name];
 
 			if(subscriptions && subscriptions.length > 0){
 				for (var i = subscriptions.length - 1; i >= 0; i--) {
 					
 					if(subscriptions[i].source === 'host'){
 						// local event handler
-						subscriptions[i].handler(data);	// execute handler
+						subscriptions[i].handler(data, { iframe: iframe });	// execute handler
 					} else {
 						var result = {
 							type: 'eventBroadcast',

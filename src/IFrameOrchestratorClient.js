@@ -74,7 +74,12 @@
 		var message = {
 			__ifo: true,
 			__ts: new Date()*1,
-			action: action
+			action: action,
+			iframe: { 
+				id: window.frameElement.id,
+				name: window.frameElement.name,
+				src: window.frameElement.src
+			}
 		};
 
 		parent.postMessage(message, '*');
