@@ -76,9 +76,10 @@
 			__ts: new Date()*1,
 			action: action,
 			iframe: { 
-				id: window.frameElement.id,
-				name: window.frameElement.name,
-				src: window.frameElement.src
+				// commented because it's being blocked
+				//id: window.frameElement.id,
+				//name: window.frameElement.name,
+				//src: window.frameElement.src
 			}
 		};
 
