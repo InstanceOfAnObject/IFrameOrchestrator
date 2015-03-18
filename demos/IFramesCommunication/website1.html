@@ -47,7 +47,11 @@
 
 		// trigger an event called 'Event_A' passing an object as data 
 		function triggerHello(){
-			iframeOrchestratorClient.triggerEvent('website1.hello', { value: 'Hello from Website 1!' });
+			try{
+				iframeOrchestratorClient.triggerEvent('website1.hello', { value: 'Hello from Website 1!' });	
+			}catch(ex){
+				console.log(ex);
+			}
 		}
 
 		function subscribeGlobalTextChangedEvent() {
