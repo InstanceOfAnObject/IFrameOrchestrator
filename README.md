@@ -23,6 +23,15 @@ This means that it's supported by the majority of browsers, even older ones.
 
 See here the browser support table: [CanIUse](http://caniuse.com/#search=postMessage)
 
+## Installation
+### bower
+
+Via [Bower][]:
+
+```
+$ bower install iframe-orchestrator
+```
+
 ## Typical usage
 The trick is done by 2 javascript files, one on the global page (IFrameOrchestrator.js) and another one on each page that renders inside an IFrame (IFrameOrchestratorClient.js).
 

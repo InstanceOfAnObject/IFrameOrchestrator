@@ -1,0 +1,18 @@
+{
+  "name": "iframe-orchestrator",
+  "version": "1.3.3",
+  "homepage": "https://github.com/InstanceOfAnObject/IFrameOrchestrator",
+  "authors": [
+    "Alexandre Simoes <mail@alexcode.com>"
+  ],
+  "description": "Orchestrates messages between an IFrame and its parent page, as well as between IFrames on the same page.",
+  "keywords": [
+    "iframe",
+    "orchestrate",
+    "link",
+    "javascript",
+    "communication",
+    "events"
+  ],
+  "license": "MIT"
+}
