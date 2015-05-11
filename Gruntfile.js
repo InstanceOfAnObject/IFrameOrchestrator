@@ -40,7 +40,7 @@ module.exports = function(grunt) {
         updateConfigs: [],
         commit: true,
         commitMessage: 'Release v%VERSION%',
-        commitFiles: ['package.json', 'bower.json', 'Gruntfile.js', 'dist/*.js', 'src/*.js'],
+        commitFiles: ['package.json', 'bower.json', 'Gruntfile.js'],
         createTag: true,
         tagName: 'v%VERSION%',
         tagMessage: 'Version %VERSION%',
@@ -72,6 +72,15 @@ module.exports = function(grunt) {
         2.2: minor verion:    grunt minor
         2.3: major version:   grunt major
       3. Push to git
+  */
+  
+  /*  Release procedure:
+      ==================
+        grunt patch
+        git add [list of files to add except bower.json and package.json (include dist and src)]
+        git commit -m "description of the commit"
+        grunt commit  => this creates the tagand pushes the remaining bower.json and package.json
+        git push
   */
   grunt.registerTask('patch', ['jshint', 'bump-only:patch', 'clean', 'uglify']);
   grunt.registerTask('minor', ['jshint', 'bump-only:minor', 'clean', 'uglify']);
