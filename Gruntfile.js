@@ -75,7 +75,7 @@ module.exports = function(grunt) {
   */
   grunt.registerTask('patch', ['jshint', 'bump-only:patch', 'clean', 'uglify']);
   grunt.registerTask('minor', ['jshint', 'bump-only:minor', 'clean', 'uglify']);
-  grunt.registerTask('major', ['jshint', 'bump-only:major', 'clean', 'uglify', 'bump-commit']);
+  grunt.registerTask('major', ['jshint', 'bump-only:major', 'clean', 'uglify']);
   
   grunt.registerTask('commit', ['bump-commit']);
 };
