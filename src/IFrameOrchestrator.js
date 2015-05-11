@@ -138,7 +138,7 @@
 							data: data
 						};
 	
-						subscriptions[i].source.postMessage(result, subscriptions[i].origin);
+						subscriptions[i].source.postMessage(JSON.stringify(result), subscriptions[i].origin);
 					}
 				}
 			}
@@ -168,24 +168,27 @@
 	// all the possible objects that can be called from the client IFrame
 	var _messageActions = {
 		setProperty: function(event){
-			_localActions.setProperty(event.data.action.data.key, event.data.action.data.value);
+			var _data = JSON.parse(event.data);
+			_localActions.setProperty(_data.action.data.key, _data.action.data.value);
 		},
 		getProperty: function(event){
-			var value = _localActions.getProperty(event.data.action.data.key);
+			var _data = JSON.parse(event.data);
+			var value = _localActions.getProperty(_data.action.data.key);
 
 			var result = {
 				type: 'getPropertyReply',
-				uuid: event.data.action.uuid,
+				uuid: _data.action.uuid,
 				value: value
 			};
 
-			_log('replying to: ' + event.data.action.uuid);
-			event.source.postMessage(result, event.origin);
+			_log('replying to: ' + _data.action.uuid);
+			event.source.postMessage(JSON.stringify(result), event.origin);
 		},
 		subscribeEvent: function(event){
-			_log('subscribing request to event: ' + event.data.action.event.name);
+			var _data = JSON.parse(event.data);
+			_log('subscribing request to event: ' + _data.action.event.name);
 
-			var name = event.data.action.event.name;
+			var name = _data.action.event.name;
 
 			var subscription = {
 				source: event.source,
@@ -196,9 +199,10 @@
 			dataStore.subscriptions[name].push(subscription);
 		},
 		unsubscribeEvent: function(event){
-			_log('unsubscribing request to event: ' + event.data.action.event.name);
+			var _data = JSON.parse(event.data);
+			_log('unsubscribing request to event: ' + _data.action.event.name);
 
-			var name = event.data.action.event.name;
+			var name = _data.action.event.name;
 
 			if(dataStore.subscriptions[name] !== undefined){
 				for (var i = dataStore.subscriptions[name].length - 1; i >= 0; i--) {
@@ -209,11 +213,12 @@
 			}
 		},
 		triggerEvent: function(event){
-			_log('trigger request of event: ' + event.data.action.event.name);
+			var _data = JSON.parse(event.data);
+			_log('trigger request of event: ' + _data.action.event.name);
 
-			var name = event.data.action.event.name,
-				data = event.data.action.event.data,
-				iframe = event.data.iframe,
+			var name = _data.action.event.name,
+				data = _data.action.event.data,
+				iframe = _data.iframe,
 				subscriptions = dataStore.subscriptions[name];
 
 			if(subscriptions && subscriptions.length > 0){
@@ -229,7 +234,7 @@
 							data: data
 						};
 	
-						subscriptions[i].source.postMessage(result, subscriptions[i].origin);	
+						subscriptions[i].source.postMessage(JSON.stringify(result), subscriptions[i].origin);	
 					}
 				}
 			}
@@ -238,14 +243,22 @@
 
 	// messages receiver
 	var receiveMessage = function(event) {
-	  if (!_isAllowedOrigin(event.origin) || !_isExpectedMessage(event.data)){
+	  var _data = null;
+	  
+	  if(!event){
+	  	return;
+	  } else if (event.data && typeof event.data === 'string'){
+	  	_data = JSON.parse(event.data);
+	  }
+	  
+	  if (!_isAllowedOrigin(event.origin) || !_isExpectedMessage(_data)){
 	    return;
 	  }
 
 	  _log('got your message');
 	  
 	  // call the appropriate action type method
-	  _messageActions[event.data.action.type](event);
+	  _messageActions[_data.action.type](event);
 	};
 
 

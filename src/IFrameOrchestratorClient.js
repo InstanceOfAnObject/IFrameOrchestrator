@@ -83,7 +83,7 @@
 			}
 		};
 
-		parent.postMessage(message, '*');
+		parent.postMessage(JSON.stringify(message), '*');
 	};
 
 	var isValidKey = function(key){
@@ -186,18 +186,20 @@
 
 	var inboundActions = {
 		getPropertyReply: function(event){
-		  var callback = pendingReplies[event.data.uuid];
+		  var _data = JSON.parse(event.data),
+		  	  callback = pendingReplies[_data.uuid];
 
 		  if(callback){
-		  	callback(event.data.value);
+		  	callback(_data.value);
 		  }
 
-		  delete pendingReplies[event.data.uuid];
+		  delete pendingReplies[_data.uuid];
 		},
 		eventBroadcast: function(event){
-			var name = event.data.name,
-					data = event.data.data,
-					handler = subscribedEvents[name];
+			var _data = JSON.parse(event.data),
+				name = _data.name,
+				data = _data.data,
+				handler = subscribedEvents[name];
 			
 			if(handler !== undefined && typeof handler === 'function'){
 				handler(data);
@@ -207,7 +209,8 @@
 
 	// messages reply receiver
 	var receiveMessage = function(event) {
-		var action = event.data.type;
+		var _data = JSON.parse(event.data),
+			action = _data.type;
 
 		if (action && inboundActions[action]){
 			inboundActions[action](event);
