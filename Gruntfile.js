@@ -40,7 +40,7 @@ module.exports = function(grunt) {
         updateConfigs: [],
         commit: true,
         commitMessage: 'Release v%VERSION%',
-        commitFiles: ['package.json', 'bower.json'],
+        commitFiles: ['package.json', 'bower.json', 'Gruntfile.js', 'dist/*.js', 'src/*.js'],
         createTag: true,
         tagName: 'v%VERSION%',
         tagMessage: 'Version %VERSION%',
@@ -73,7 +73,9 @@ module.exports = function(grunt) {
         2.3: major version:   grunt major
       3. Push to git
   */
-  grunt.registerTask('patch', ['jshint', 'bump-only:patch', 'clean', 'uglify', 'bump-commit']);
-  grunt.registerTask('minor', ['jshint', 'bump-only:minor', 'clean', 'uglify', 'bump-commit']);
+  grunt.registerTask('patch', ['jshint', 'bump-only:patch', 'clean', 'uglify']);
+  grunt.registerTask('minor', ['jshint', 'bump-only:minor', 'clean', 'uglify']);
   grunt.registerTask('major', ['jshint', 'bump-only:major', 'clean', 'uglify', 'bump-commit']);
+  
+  grunt.registerTask('commit', ['bump-commit']);
 };
