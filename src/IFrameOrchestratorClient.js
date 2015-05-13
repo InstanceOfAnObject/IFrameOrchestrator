@@ -61,6 +61,15 @@
 	    return false;
 	};
 
+	// centralized JSON parser
+	var parseJSON = function(value){
+		try {
+			return JSON.parse(value);
+		} catch (e) {
+			return null;
+		}
+	};
+
 	// generate a unique identifier
 	var _uuid  = function(){
 		var now = new Date() * 1,
@@ -186,18 +195,26 @@
 
 	var inboundActions = {
 		getPropertyReply: function(event){
-		  var _data = JSON.parse(event.data),
-		  	  callback = pendingReplies[_data.uuid];
-
-		  if(callback){
-		  	callback(_data.value);
-		  }
-
-		  delete pendingReplies[_data.uuid];
+			var _data = parseJSON(event.data);
+			if(_data === undefined || _data === null){
+				return;
+			}
+		
+			var callback = pendingReplies[_data.uuid];
+			
+			if(callback){
+			  callback(_data.value);
+			}
+			
+			delete pendingReplies[_data.uuid];
 		},
 		eventBroadcast: function(event){
-			var _data = JSON.parse(event.data),
-				name = _data.name,
+			var _data = parseJSON(event.data);
+			if(_data === undefined || _data === null){
+				return;
+			}
+			
+			var name = _data.name,
 				data = _data.data,
 				handler = subscribedEvents[name];
 			
@@ -209,8 +226,12 @@
 
 	// messages reply receiver
 	var receiveMessage = function(event) {
-		var _data = JSON.parse(event.data),
-			action = _data.type;
+		var _data = parseJSON(event.data);
+		if(_data === undefined || _data === null){
+			return;
+		}
+			
+		var action = _data.type;
 
 		if (action && inboundActions[action]){
 			inboundActions[action](event);

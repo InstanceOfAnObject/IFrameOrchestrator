@@ -42,6 +42,15 @@
 		}
 	};
 
+	// centralized JSON parser
+	var parseJSON = function(value){
+		try {
+			return JSON.parse(value);
+		} catch (e) {
+			return null;
+		}
+	};
+
 	// cross browser addEventListener (https://gist.github.com/eduardocereto/955642)
 	var _addEventListener = function(obj, evt, fnc) {
 	    // W3C model
@@ -168,11 +177,19 @@
 	// all the possible objects that can be called from the client IFrame
 	var _messageActions = {
 		setProperty: function(event){
-			var _data = JSON.parse(event.data);
+			var _data = parseJSON(event.data);
+			if(_data === undefined || _data === null){
+				return;
+			}
+			
 			_localActions.setProperty(_data.action.data.key, _data.action.data.value);
 		},
 		getProperty: function(event){
-			var _data = JSON.parse(event.data);
+			var _data = parseJSON(event.data);
+			if(_data === undefined || _data === null){
+				return;
+			}
+			
 			var value = _localActions.getProperty(_data.action.data.key);
 
 			var result = {
@@ -185,7 +202,11 @@
 			event.source.postMessage(JSON.stringify(result), event.origin);
 		},
 		subscribeEvent: function(event){
-			var _data = JSON.parse(event.data);
+			var _data = parseJSON(event.data);
+			if(_data === undefined || _data === null){
+				return;
+			}
+			
 			_log('subscribing request to event: ' + _data.action.event.name);
 
 			var name = _data.action.event.name;
@@ -199,7 +220,11 @@
 			dataStore.subscriptions[name].push(subscription);
 		},
 		unsubscribeEvent: function(event){
-			var _data = JSON.parse(event.data);
+			var _data = parseJSON(event.data);
+			if(_data === undefined || _data === null){
+				return;
+			}
+			
 			_log('unsubscribing request to event: ' + _data.action.event.name);
 
 			var name = _data.action.event.name;
@@ -213,7 +238,11 @@
 			}
 		},
 		triggerEvent: function(event){
-			var _data = JSON.parse(event.data);
+			var _data = parseJSON(event.data);
+			if(_data === undefined || _data === null){
+				return;
+			}
+			
 			_log('trigger request of event: ' + _data.action.event.name);
 
 			var name = _data.action.event.name,
@@ -248,7 +277,10 @@
 	  if(!event){
 	  	return;
 	  } else if (event.data && typeof event.data === 'string'){
-	  	_data = JSON.parse(event.data);
+		_data = parseJSON(event.data);
+		if(_data === undefined || _data === null){
+			return;
+		}
 	  }
 	  
 	  if (!_isAllowedOrigin(event.origin) || !_isExpectedMessage(_data)){
