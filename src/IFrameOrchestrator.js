@@ -119,7 +119,7 @@
 	var _localActions = {
 		setProperty: function(key,value){
 			if(isValidKey){
-				_log('setting the property: ' + key);
+				_log('setting the property: ' + key + ' = ' + value);
 				dataStore.properties[key] = value;
 			} else {
 				throw new Error('IFrameOrchestrator [setProperty] Invalid property name');
@@ -127,8 +127,9 @@
 		},		
 		getProperty: function(key){
 			if(isValidKey){
-				_log('getting the property: ' + key);
-				return dataStore.properties[key];
+				var value = dataStore.properties[key];
+				_log('getting the property: ' + key + ' = ' + value);
+				return value;
 			} else {
 				throw new Error('IFrameOrchestrator [getProperty] Invalid property name');
 			}

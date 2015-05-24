@@ -1,7 +1,20 @@
 <!DOCTYPE html>
 <html>
-    <head></head>
+    <head>
+        <script type="text/javascript" src="../../../src/IFrameOrchestratorClient.js"></script>
+    </head>
     <body>
         <h2>Demo item page</h2>
+        
+        <a id="linkBackToList" href="list.html">&lt;&lt; Go back to list page</a>
+        
+        <script>
+            document.getElementById('linkBackToList').onclick = function(){
+                if(window.self !== window.top){
+                    iframeOrchestratorClient.triggerEvent('frame.navigate', this.href);
+                    return false;
+                }
+            };
+        </script>
     </body>
 </html>

@@ -6,14 +6,14 @@
     <body>
         <h2>Demo items list page</h2>
         
-        <a id="bla" href="item.html">Go to item page</a>
-        
-        
+        <a id="linkToItem" href="item.html">Go to item page</a>
         
         <script>
-            document.getElementById('bla').onclick = function(){
-                iframeOrchestratorClient.triggerEvent('frame.navigate', this.href);
-                return false;
+            document.getElementById('linkToItem').onclick = function(){
+                if(window.self !== window.top){
+                    iframeOrchestratorClient.triggerEvent('frame.navigate', this.href);
+                    return false;
+                }
             };
         </script>
     </body>

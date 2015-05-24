@@ -80,7 +80,7 @@ module.exports = function(grunt) {
         git add [list of files to add except bower.json and package.json (include dist and src)]
         git commit -m "description of the commit"
         grunt commit  => this creates the tagand pushes the remaining bower.json and package.json
-        git push
+        git push --tags
   */
   grunt.registerTask('patch', ['jshint', 'bump-only:patch', 'clean', 'uglify']);
   grunt.registerTask('minor', ['jshint', 'bump-only:minor', 'clean', 'uglify']);

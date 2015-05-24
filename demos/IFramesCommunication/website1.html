@@ -41,8 +41,7 @@
 
 		//get propery declared in the main page
 		iframeOrchestratorClient.getProperty('global.username', function(value){
-			output('get property: global.username');
-			output(value);
+			output('get property: global.username => ' + value);
 		});
 
 		// trigger an event called 'Event_A' passing an object as data 

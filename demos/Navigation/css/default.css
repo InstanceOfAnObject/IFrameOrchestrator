@@ -1,12 +1,15 @@
 
 #leftPanel {
-    
-    width: 240px;
+    width: 400px;
     background-color: #dcdcdc;
     padding: 10px;
-    display: none;
+    display: block;
+    float: left;
 }
 
-#iframe1 {
+#contentPanel {
+    margin-left: 440px;
+}
+#contentPanel iframe {
     width: 100%;
 }
