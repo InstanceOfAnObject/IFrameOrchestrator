@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Navigation demo</title>
+        
+        <link rel="stylesheet" href="css/default.css" type="text/css" />
+        
+    	<script type="text/javascript" src="../../src/IFrameOrchestrator.js"></script>
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    	<script type="text/javascript" src="dependencies/jquery.history.js"></script>
+    	
+    	<script type="text/javascript">
+    		var ifo = window.iframeOrchestrator({
+    			logging: true
+    		});
+    		
+    		ifo.subscribeEvent('global.frameRouteChange', function(url, args){
+    		    History.replaceState({},"", url);
+    		});
+    	</script>
+    </head>
+    <body>
+        <h1>Navigation demo</h1>
+        
+        <div id="leftPanel">
+            <h2>Description</h2>
+            <ul>
+                <li>Navigating inside the IFrame won't trigger a full parent page refresh</li>
+                <li>You can bookmark the page URL, the IFrame will load the expected page</li>
+                <li>Nothing will break if you go directly to the IFrame page (not inside IFrame)</li>
+            </ul>
+        </div>
+        
+        <div id="contentPanel">
+            <!-- set the default src as default_src so that it doesn't load automatically -->
+            <iframe id="iframe1" src="app/index.html" width="100%" height="300px"></iframe>
+            
+        </div>
+    </body>
+</html>

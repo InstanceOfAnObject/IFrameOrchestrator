@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="nav">
+    <head>
+        <title></title>
+        
+        <script type="text/javascript" src="../../../../src/IFrameOrchestratorClient.js"></script>
+    </head>
+    <body ng-controller="Main as mc">
+        
+        <h1 ng-bind="mc.header"></h1>
+        
+        <div ng-view></div>
+        
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>
+        
+        <script type="text/javascript" src="app.js"></script>
+        <script type="text/javascript" src="controllers/main-controller.js"></script>
+        <script type="text/javascript" src="controllers/home-controller.js"></script>
+        <script type="text/javascript" src="controllers/item-controller.js"></script>
+    </body>
+</html>
